@@ -24,7 +24,7 @@ bool GenericAnalogInput::begin() {
 		return saveConfig(config_path, getConfig());
 	} else {
 		// Load settings
-		return setConfig(Storage::readFile(config_path));
+		return setConfig(Storage::readFile(config_path), false);
 	}
 }
 
@@ -48,9 +48,10 @@ String GenericAnalogInput::getConfig() {
 }
 
 /// @brief Sets the configuration for this device
-/// @param config The JSON config to use
+/// @param config A JSON string of the configuration settings
+/// @param save If the configuration should be saved to a file
 /// @return True on success
-bool GenericAnalogInput::setConfig(String config) {
+bool GenericAnalogInput::setConfig(String config, bool save) {
 	// Allocate the JSON document
   	JsonDocument doc;
 	// Deserialize file contents
@@ -68,8 +69,10 @@ bool GenericAnalogInput::setConfig(String config) {
 	analog_config.RollingAverage = doc["RollingAverage"].as<bool>() ;
 	analog_config.AverageSize = doc["AverageSize"].as<int>();
 
-	if (!saveConfig(config_path, getConfig())) {
-		return false;
+	if (save) {
+		if (!saveConfig(config_path, getConfig())) {
+			return false;
+		}
 	}
 	return configureInput();
 }

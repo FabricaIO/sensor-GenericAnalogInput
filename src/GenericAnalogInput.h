@@ -35,7 +35,7 @@ class GenericAnalogInput : public Sensor {
 		/// @brief Path to configuration file
 		String config_path;
 
-		/// Queue holding readgins for the rolling average
+		/// Queue holding readings for the rolling average
 		std::deque<int> readings;
 
 		bool configureInput();
@@ -46,6 +46,6 @@ class GenericAnalogInput : public Sensor {
 		GenericAnalogInput(int Pin, String configFile = "GenericAnalogInput.json");
 		bool begin();
 		String getConfig();
-		bool setConfig(String config);
+		bool setConfig(String config, bool save);
 		bool takeMeasurement();
 };
