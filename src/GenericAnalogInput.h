@@ -20,16 +20,16 @@ class GenericAnalogInput : public Sensor {
 			int Pin = A0;
 
 			/// @brief The voltage used by the ADC in mv
-			int ADC_Voltage_mv = 3300;
+			int ADC_Voltage_mv;
 
 			/// @brief The resolution of the ADC
-			int ADC_Resolution = 4096;
+			int ADC_Resolution;
 
 			/// @brief Whether to use a rolling average
-			bool RollingAverage = false;
+			bool RollingAverage;
 
 			/// @brief The size of the rolling average
-			int AverageSize = 5;
+			int AverageSize;
 		} analog_config;
 
 		/// @brief Path to configuration file

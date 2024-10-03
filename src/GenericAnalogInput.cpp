@@ -19,8 +19,13 @@ bool GenericAnalogInput::begin() {
 	Description.parameters = {"Analog Signal"};
 	Description.units = {"mv"};
 	bool result = false;
-	// Create settings directory if necessary
+	// Check if config exists
 	if (!checkConfig(config_path)) {
+		// Set defaults
+		analog_config.ADC_Voltage_mv = 3300;
+		analog_config.ADC_Resolution = 4096;
+		analog_config.RollingAverage = false;
+		analog_config.AverageSize = 5;
 		return saveConfig(config_path, getConfig());
 	} else {
 		// Load settings
