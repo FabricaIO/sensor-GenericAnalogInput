@@ -63,8 +63,8 @@ bool GenericAnalogInput::setConfig(String config, bool save) {
 	DeserializationError error = deserializeJson(doc, config);
 	// Test if parsing succeeds.
 	if (error) {
-		Serial.print(F("Deserialization failed: "));
-		Serial.println(error.f_str());
+		Logger.print(F("Deserialization failed: "));
+		Logger.println(error.f_str());
 		return false;
 	}
 	// Assign loaded values

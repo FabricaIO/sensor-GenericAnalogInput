@@ -1,6 +1,7 @@
 /*
 * This file and associated .cpp file are licensed under the GPLv3 License Copyright (c) 2024 Sam Groveman
 * 
+* External libraries needed:
 * ArduinoJSON: https://arduinojson.org/
 *
 * Contributors: Sam Groveman
