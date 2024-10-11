@@ -11,6 +11,7 @@ GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
 /// @brief Starts an output 
 /// @return True on success
 bool GenericAnalogInput::begin() {
+	values.resize(1);
 	// Set description
 	Description.type = "analog input";
 	Description.name = "Generic Analog Input";
