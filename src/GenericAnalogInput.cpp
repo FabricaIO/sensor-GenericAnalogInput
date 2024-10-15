@@ -4,7 +4,7 @@
 /// @param Pin Pin to use
 /// @param configFile Name of the config file to use
 GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
-	config_path = "/settings/sig/" + configFile;
+	config_path = "/settings/sen/" + configFile;
 	analog_config.Pin = Pin;
 }
 
