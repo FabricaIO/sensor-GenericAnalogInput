@@ -14,7 +14,7 @@
 
 /// @brief Class describing a generic output on a GPIO pin
 class GenericAnalogInput : public Sensor {
-	protected:
+	public:
 		/// @brief Output configuration
 		struct {
 			/// @brief The pin number attached to the output
