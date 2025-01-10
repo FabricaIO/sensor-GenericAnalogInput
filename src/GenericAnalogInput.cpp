@@ -15,7 +15,6 @@ bool GenericAnalogInput::begin() {
 	// Set description
 	Description.type = "analog input";
 	Description.name = "Generic Analog Input";
-	Description.id = 0;
 	Description.parameterQuantity = 1;
 	Description.parameters = {"Analog Signal"};
 	Description.units = {"mv"};
