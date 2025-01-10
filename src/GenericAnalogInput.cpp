@@ -1,6 +1,6 @@
 #include"GenericAnalogInput.h"
 
-/// @brief Creates a generic output
+/// @brief Creates a generic analog input
 /// @param Pin Pin to use
 /// @param configFile Name of the config file to use
 GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
@@ -8,7 +8,7 @@ GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
 	analog_config.Pin = Pin;
 }
 
-/// @brief Starts an output 
+/// @brief Starts an analog input 
 /// @return True on success
 bool GenericAnalogInput::begin() {
 	values.resize(1);
@@ -19,7 +19,6 @@ bool GenericAnalogInput::begin() {
 	Description.parameterQuantity = 1;
 	Description.parameters = {"Analog Signal"};
 	Description.units = {"mv"};
-	bool result = false;
 	// Check if config exists
 	if (!checkConfig(config_path)) {
 		// Set defaults
@@ -98,7 +97,7 @@ bool GenericAnalogInput::configureInput() {
 }
 
 /// @brief Gets a reading from the analog input
-/// @param average Whether to use a rolling average or the measurement
+/// @param average Whether to use a rolling average for the measurement
 /// @return The value of the reading
 int GenericAnalogInput::getAnalogValue(bool average) {
 	if (!average) {
