@@ -11,13 +11,13 @@ GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
 /// @brief Starts an analog input 
 /// @return True on success
 bool GenericAnalogInput::begin() {
-	values.resize(1);
 	// Set description
 	Description.type = "analog input";
 	Description.name = "Generic Analog Input";
 	Description.parameterQuantity = 1;
 	Description.parameters = {"Analog Signal"};
 	Description.units = {"mv"};
+	values.resize(Description.parameterQuantity);
 	// Check if config exists
 	if (!checkConfig(config_path)) {
 		// Set defaults
