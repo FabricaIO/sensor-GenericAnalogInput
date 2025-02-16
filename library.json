@@ -1,5 +1,5 @@
 {
-	"name": "Fabrica-IO Sensor Generic Analog Input",
+	"name": "sensor-GenericAnalogInput",
 	"version": "0.5.0",
 	"description": "Generic analog input sensor",
 	"keywords": "Fabrica-IO, sensor, analog",
