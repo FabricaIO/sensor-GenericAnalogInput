@@ -14,11 +14,11 @@
 
 /// @brief Class describing a generic output on a GPIO pin
 class GenericAnalogInput : public Sensor {
-	public:
+	protected:
 		/// @brief Output configuration
 		struct {
 			/// @brief The pin number attached to the output
-			int Pin = A0;
+			int Pin;
 
 			/// @brief The voltage used by the ADC in mv
 			int ADC_Voltage_mv;
