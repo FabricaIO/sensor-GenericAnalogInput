@@ -38,6 +38,7 @@ String GenericAnalogInput::getConfig() {
 	// Allocate the JSON document
 	JsonDocument doc;
 	// Assign current values
+	doc["Name"] = Description.name;
 	doc["Pin"] = analog_config.Pin;
 	doc["ADC_Voltage_mv"] = analog_config.ADC_Voltage_mv;
 	doc["ADC_Resolution"] = analog_config.ADC_Resolution;
@@ -67,6 +68,7 @@ bool GenericAnalogInput::setConfig(String config, bool save) {
 		return false;
 	}
 	// Assign loaded values
+	Description.name = doc["Name"].as<String>();
 	analog_config.Pin = doc["Pin"].as<int>();
 	analog_config.ADC_Voltage_mv = doc["ADC_Voltage_mv"].as<int>();
 	analog_config.ADC_Resolution = doc["ADC_Resolution"].as<int>();
