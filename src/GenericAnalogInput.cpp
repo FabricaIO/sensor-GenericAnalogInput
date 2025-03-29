@@ -1,9 +1,10 @@
 #include"GenericAnalogInput.h"
 
 /// @brief Creates a generic analog input
+/// @param Name The device name
 /// @param Pin Pin to use
 /// @param configFile Name of the config file to use
-GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
+GenericAnalogInput::GenericAnalogInput(String Name, int Pin, String configFile) : Sensor(Name) {
 	config_path = "/settings/sen/" + configFile;
 	analog_config.Pin = Pin;
 }
@@ -13,7 +14,6 @@ GenericAnalogInput::GenericAnalogInput(int Pin, String configFile) {
 bool GenericAnalogInput::begin() {
 	// Set description
 	Description.type = "analog input";
-	Description.name = "Generic Analog Input";
 	Description.parameterQuantity = 1;
 	Description.parameters = {"Analog Signal"};
 	Description.units = {"mv"};

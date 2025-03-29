@@ -44,7 +44,7 @@ class GenericAnalogInput : public Sensor {
 		int analogToMV(int value);
 
 	public:
-		GenericAnalogInput(int Pin, String configFile = "GenericAnalogInput.json");
+		GenericAnalogInput(String Name, int Pin, String configFile = "GenericAnalogInput.json");
 		bool begin();
 		String getConfig();
 		bool setConfig(String config, bool save);
