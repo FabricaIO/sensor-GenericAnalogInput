@@ -14,9 +14,9 @@ GenericAnalogInput::GenericAnalogInput(String Name, int Pin, String configFile) 
 bool GenericAnalogInput::begin() {
 	// Set description
 	Description.type = "analog input";
-	Description.parameterQuantity = 1;
-	Description.parameters = {"Analog Signal"};
-	Description.units = {"mv"};
+	Description.parameterQuantity = 2;
+	Description.parameters = {"Analog Signal", "ADC Reading"};
+	Description.units = {"mv", "raw"};
 	values.resize(Description.parameterQuantity);
 	// Check if config exists
 	if (!checkConfig(config_path)) {
@@ -86,7 +86,9 @@ bool GenericAnalogInput::setConfig(String config, bool save) {
 /// @brief Takes a measurement
 /// @return True on success
 bool GenericAnalogInput::takeMeasurement() {
-	values[0] = analogToMV(getAnalogValue(analog_config.RollingAverage));
+	int analogValue = getAnalogValue(analog_config.RollingAverage);
+	values[0] = analogToMV(analogValue);
+	values[1] = analogValue;
 	return true;
 }
 
