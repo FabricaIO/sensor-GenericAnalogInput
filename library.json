@@ -23,7 +23,7 @@
 	"frameworks": "arduino",
 	"platforms": "*",
 	"fabricaio" : {
-		"name": "analogInput",
+		"name": "AnalogInput",
 		"type": 0,
 		"category": "analog sensor",
 		"libname": "GenericAnalogInput",
