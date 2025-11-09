@@ -21,8 +21,6 @@ bool GenericAnalogInput::begin() {
 	// Check if config exists
 	if (!checkConfig(config_path)) {
 		// Set defaults
-		analog_config.ADC_Voltage_mv = 3300;
-		analog_config.ADC_Resolution = 4096;
 		analog_config.RollingAverage = false;
 		analog_config.AverageSize = 5;
 		return saveConfig(config_path, getConfig());
@@ -40,8 +38,6 @@ String GenericAnalogInput::getConfig() {
 	// Assign current values
 	doc["Name"] = Description.name;
 	doc["Pin"] = analog_config.Pin;
-	doc["ADC_Voltage_mv"] = analog_config.ADC_Voltage_mv;
-	doc["ADC_Resolution"] = analog_config.ADC_Resolution;
 	doc["RollingAverage"] = analog_config.RollingAverage;
 	doc["AverageSize"] = analog_config.AverageSize;
 
@@ -70,8 +66,6 @@ bool GenericAnalogInput::setConfig(String config, bool save) {
 	// Assign loaded values
 	Description.name = doc["Name"].as<String>();
 	analog_config.Pin = doc["Pin"].as<int>();
-	analog_config.ADC_Voltage_mv = doc["ADC_Voltage_mv"].as<int>();
-	analog_config.ADC_Resolution = doc["ADC_Resolution"].as<int>();
 	analog_config.RollingAverage = doc["RollingAverage"].as<bool>() ;
 	analog_config.AverageSize = doc["AverageSize"].as<int>();
 
@@ -86,9 +80,8 @@ bool GenericAnalogInput::setConfig(String config, bool save) {
 /// @brief Takes a measurement
 /// @return True on success
 bool GenericAnalogInput::takeMeasurement() {
-	int analogValue = getAnalogValue(analog_config.RollingAverage);
-	values[0] = analogToMV(analogValue);
-	values[1] = analogValue;
+	values[0] = getMVValue();
+	values[1] = getAnalogValue();
 	return true;
 }
 
@@ -100,31 +93,45 @@ bool GenericAnalogInput::configureInput() {
 }
 
 /// @brief Gets a reading from the analog input
-/// @param average Whether to use a rolling average for the measurement
 /// @return The value of the reading
-int GenericAnalogInput::getAnalogValue(bool average) {
-	if (!average) {
+uint16_t GenericAnalogInput::getAnalogValue() {
+	if (!analog_config.RollingAverage) {
 		return analogRead(analog_config.Pin);
 	}
 	// Resize average queue if needed
-	if(readings.size() > analog_config.AverageSize) {
-		readings.resize(analog_config.AverageSize);
-		readings.shrink_to_fit();
+	if(readingsAnalog.size() > analog_config.AverageSize) {
+		readingsAnalog.resize(analog_config.AverageSize);
+		readingsAnalog.shrink_to_fit();
 	}
-	if (readings.size() == analog_config.AverageSize) {
-		readings.pop_back();
+	if (readingsAnalog.size() == analog_config.AverageSize) {
+		readingsAnalog.pop_back();
 	}
-	readings.push_front(analogRead(analog_config.Pin));
+	readingsAnalog.push_front(analogRead(analog_config.Pin));
 	int reading = 0;
-	for (const auto& r : readings) {
+	for (const auto& r : readingsAnalog) {
 		reading += r;
 	}
-	return reading / readings.size();
+	return reading / readingsAnalog.size();
 }
 
-/// @brief Converts an analog reading to mV
-/// @param value The value to convert
+/// @brief Gets a reading from the analog input as millivolts
 /// @return The reading in millivolts
-int GenericAnalogInput::analogToMV(int value) {
-	return value * analog_config.ADC_Voltage_mv / analog_config.ADC_Resolution;
+uint32_t GenericAnalogInput::getMVValue() {
+	if (!analog_config.RollingAverage) {
+		return analogReadMilliVolts(analog_config.Pin);
+	}
+	// Resize average queue if needed
+	if(readingsMV.size() > analog_config.AverageSize) {
+		readingsMV.resize(analog_config.AverageSize);
+		readingsMV.shrink_to_fit();
+	}
+	if (readingsMV.size() == analog_config.AverageSize) {
+		readingsMV.pop_back();
+	}
+	readingsMV.push_front(analogReadMilliVolts(analog_config.Pin));
+	int reading = 0;
+	for (const auto& r : readingsMV) {
+		reading += r;
+	}
+	return reading / readingsMV.size();
 }

@@ -20,12 +20,6 @@ class GenericAnalogInput : public Sensor {
 			/// @brief The pin number attached to the output
 			int Pin;
 
-			/// @brief The voltage used by the ADC in mv
-			int ADC_Voltage_mv;
-
-			/// @brief The resolution of the ADC
-			int ADC_Resolution;
-
 			/// @brief Whether to use a rolling average
 			bool RollingAverage;
 
@@ -37,11 +31,14 @@ class GenericAnalogInput : public Sensor {
 		String config_path;
 
 		/// Queue holding readings for the rolling average
-		std::deque<int> readings;
+		std::deque<uint16_t> readingsAnalog;
+
+		/// Queue holding readings for the rolling average
+		std::deque<uint32_t> readingsMV;
 
 		bool configureInput();
-		int getAnalogValue(bool average);
-		int analogToMV(int value);
+		uint16_t getAnalogValue();
+		uint32_t getMVValue();
 
 	public:
 		GenericAnalogInput(String Name, int Pin, String configFile = "GenericAnalogInput.json");
